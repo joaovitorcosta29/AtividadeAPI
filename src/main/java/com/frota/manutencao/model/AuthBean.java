@@ -8,36 +8,26 @@ package com.frota.manutencao.model;
  *
  * @author Aluno
  */
-public class UsuarioBean {
-    private Integer idUsuario;
-    private String nomeUsuario;
+public class AuthBean {
+    private String nome;
     private String email;
     private String senha;
 
-    public UsuarioBean() {
+    public AuthBean() {
     }
 
-    public UsuarioBean(Integer idUsuario, String nomeUsuario, String email, String senha) {
-        this.idUsuario = idUsuario;
-        this.nomeUsuario = nomeUsuario;
+    public AuthBean(String nome, String email, String senha) {
+        this.nome = nome;
         this.email = email;
         this.senha = senha;
     }
 
-    public Integer getIdUsuario() {
-        return idUsuario;
+    public String getNome() {
+        return nome;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public String getNomeUsuario() {
-        return nomeUsuario;
-    }
-
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
@@ -55,6 +45,5 @@ public class UsuarioBean {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
     
 }

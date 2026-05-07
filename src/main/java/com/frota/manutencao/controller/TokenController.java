@@ -4,23 +4,32 @@
  */
 package com.frota.manutencao.controller;
 
+import com.frota.manutencao.model.AuthBean;
+import com.frota.manutencao.model.UsuarioBean;
 import com.frota.manutencao.service.TokenService;
+import com.frota.manutencao.service.UsuarioService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author Aluno
  */
+@RestController
 public class TokenController {
     
     // Injeta automaticamente a instância do TokenService
     // O Spring gerencia o ciclo de vida desta dependência
     @Autowired
     private TokenService service;
+    
+    @Autowired
+    private UsuarioService usuarioservice;
     
     /**
      * Endpoint para gerar um novo token JWT
@@ -39,6 +48,16 @@ public class TokenController {
     public String testeToken() {
         // Chama o serviço para gerar um novo token JWT
         return service.gerarToken();
+    }
+    
+    @PostMapping("/cadastrar")
+    public void Cadastrar(@RequestBody UsuarioBean usuario){
+        usuarioservice.cadastrar(usuario);
+    }
+    
+    @PostMapping("/logar")
+    public void Logar(@RequestBody AuthBean usuario){
+        usuarioservice.logar(usuario.getEmail(), usuario.getNome());
     }
     
     /**
@@ -60,6 +79,7 @@ public class TokenController {
      * @param token String - token JWT recebido na requisição
      * @return String - resultado da validação com detalhes do token
      */
+    
     @PostMapping("/validar-token")
     public String validarToken(@RequestParam String token) {
         // Valida o token usando o serviço

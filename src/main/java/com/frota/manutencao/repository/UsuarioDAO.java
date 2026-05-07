@@ -4,6 +4,7 @@
  */
 package com.frota.manutencao.repository;
 
+import com.frota.manutencao.model.AuthBean;
 import com.frota.manutencao.model.UsuarioBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,45 +17,38 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UsuarioDAO {
-    public void registrar(UsuarioBean usuario) {
+    public void cadastrar(UsuarioBean usuario) {
         try {
             Connection conn = Conexao.conectar();
-
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO usuario (nome, email, senha) VALUES (?, ?, ?)");
+            PreparedStatement stmt = null;
+            stmt = conn.prepareStatement("INSERT INTO usuario (nome_usuario, email, senha) VALUES (?, ?, ?)");
 
             stmt.setString(1, usuario.getNomeUsuario());
             stmt.setString(2, usuario.getEmail());
             stmt.setString(3, usuario.getSenha());
 
-            stmt.executeUpdate();
-
-            System.out.println("Usuário registrado com sucesso!");
-
-            stmt.close();
-            conn.close();
-
+            stmt.execute();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
 }
-    public UsuarioBean buscarPorEmail(String email) {
-    UsuarioBean usuario = null;
+    public AuthBean logar(String email, String senha) {
+        AuthBean auth = new AuthBean();
     
         try {
             Connection conn = Conexao.conectar();
-
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM usuario WHERE email = ?");
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+            stmt = conn.prepareStatement("SELECT * FROM usuario WHERE email = ? AND senha = ?");
 
             stmt.setString(1, email);
-
-            ResultSet rs = stmt.executeQuery();
+            stmt.setString(2, senha);
+            rs = stmt.executeQuery();
 
             if (rs.next()) {
-             usuario = new UsuarioBean();
-                usuario.setIdUsuario(rs.getInt("id"));
-                usuario.setNomeUsuario(rs.getString("nome"));
-                usuario.setEmail(rs.getString("email"));
-                usuario.setSenha(rs.getString("senha"));
+                auth.setNome(rs.getString("nome"));
+                auth.setEmail(rs.getString("email"));
             }
 
             rs.close();
@@ -65,6 +59,6 @@ public class UsuarioDAO {
             e.printStackTrace();
         }
 
-        return usuario;
+        return auth;
     }
 }
