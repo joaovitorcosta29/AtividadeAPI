@@ -44,10 +44,8 @@ public class VeiculoController {
     public Double gastos(@PathVariable int id, @RequestHeader("Authorization") String auth) {
         
         String token = auth.replace("Bearer", "");
-        if(tokenService.validarToken(auth)){
-            return service.somarGastos(id);
-        }else{
-            return null;
-        }
+        tokenService.validarToken(token); 
+        return service.somarGastos(id);
+        
     }
 }

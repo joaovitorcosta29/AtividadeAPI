@@ -12,7 +12,9 @@ import io.jsonwebtoken.security.Keys;
 import java.util.Date;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  *
@@ -56,10 +58,10 @@ public class TokenService {
      * 
      * @return String - token JWT codificado em Base64
      */
-    public String gerarToken() {
+    public String gerarToken(String email) {
         return Jwts.builder()
                 // Define o subject (identificador do usuário)
-                .subject("iago.teste@teste.com")
+                .subject(email)
                 // Define quando o token foi criado
                 .issuedAt(new Date())
                 // Define quando o token expira (5 minutos = 300000 milissegundos)
@@ -93,7 +95,7 @@ public class TokenService {
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             // Se qualquer exceção ocorrer, o token é inválido ou expirou
-            return false;
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token expirado");
         }
     }
     

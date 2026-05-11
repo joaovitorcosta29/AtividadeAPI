@@ -5,6 +5,7 @@
 package com.frota.manutencao.controller;
 
 import com.frota.manutencao.model.AuthBean;
+import static com.frota.manutencao.repository.Conexao.user;
 import com.frota.manutencao.service.TokenService;
 import com.frota.manutencao.service.UsuarioService;
 import io.jsonwebtoken.Claims;
@@ -43,11 +44,6 @@ public class TokenController {
      * 
      * @return String - token JWT gerado
      */
-    @GetMapping("/teste")
-    public String testeToken() {
-        // Chama o serviço para gerar um novo token JWT
-        return service.gerarToken();
-    }
     
     @PostMapping("/cadastrar")
     public void Cadastrar(@RequestBody AuthBean usuario){
@@ -55,9 +51,15 @@ public class TokenController {
     }
     
     @PostMapping("/logar")
-    public void Logar(@RequestBody AuthBean usuario){
-        usuarioservice.logar(usuario.getEmail(), usuario.getNome());
+    public String Logar(@RequestBody AuthBean usuarios){
+        AuthBean usuario = usuarioservice.logar(usuarios.getEmail(), usuarios.getSenha());
+        if(usuarios.getEmail() != null){
+            return service.gerarToken(usuario.getEmail());
+        }else{
+            return "Inválido";
+        }
     }
+
     
     /**
      * Endpoint para validar um token JWT
