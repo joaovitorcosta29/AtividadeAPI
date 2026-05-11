@@ -5,7 +5,6 @@
 package com.frota.manutencao.repository;
 
 import com.frota.manutencao.model.AuthBean;
-import com.frota.manutencao.model.UsuarioBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,13 +16,13 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UsuarioDAO {
-    public void cadastrar(UsuarioBean usuario) {
+    public void cadastrar(AuthBean usuario) {
         try {
             Connection conn = Conexao.conectar();
             PreparedStatement stmt = null;
             stmt = conn.prepareStatement("INSERT INTO usuario (nome_usuario, email, senha) VALUES (?, ?, ?)");
 
-            stmt.setString(1, usuario.getNomeUsuario());
+            stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getEmail());
             stmt.setString(3, usuario.getSenha());
 

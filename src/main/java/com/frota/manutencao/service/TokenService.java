@@ -63,7 +63,7 @@ public class TokenService {
                 // Define quando o token foi criado
                 .issuedAt(new Date())
                 // Define quando o token expira (5 minutos = 300000 milissegundos)
-                .expiration(new Date(System.currentTimeMillis() + 300000))
+                .expiration(new Date(System.currentTimeMillis() + 3000000))
                 // Assina o token com a chave secreta HMAC-SHA
                 .signWith(getSignKey())
                 // Converte o token construído para a sua forma compacta (String)

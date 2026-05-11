@@ -5,7 +5,6 @@
 package com.frota.manutencao.controller;
 
 import com.frota.manutencao.model.AuthBean;
-import com.frota.manutencao.model.UsuarioBean;
 import com.frota.manutencao.service.TokenService;
 import com.frota.manutencao.service.UsuarioService;
 import io.jsonwebtoken.Claims;
@@ -51,7 +50,7 @@ public class TokenController {
     }
     
     @PostMapping("/cadastrar")
-    public void Cadastrar(@RequestBody UsuarioBean usuario){
+    public void Cadastrar(@RequestBody AuthBean usuario){
         usuarioservice.cadastrar(usuario);
     }
     

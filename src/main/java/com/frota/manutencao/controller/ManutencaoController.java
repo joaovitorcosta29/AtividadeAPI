@@ -8,6 +8,7 @@ import com.frota.manutencao.model.ManutencaoBean;
 import com.frota.manutencao.service.ManutencaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,10 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ManutencaoController {
     @Autowired
     private ManutencaoService service;
-
+    
     @PostMapping
-    public String criarServico(@RequestBody ManutencaoBean equipamento) {
-    service.criarServico(equipamento);
-    return "Serviço Cadastrado com sucesso!";
+    public String criarServico(@RequestBody ManutencaoBean equipamento) {      
+        service.criarServico(equipamento);
+        return "Serviço Cadastrado com sucesso!";
     }
-}
+} 

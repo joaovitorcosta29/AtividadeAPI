@@ -20,7 +20,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioDAO repository;
     
-    public void cadastrar(UsuarioBean usuario){
+    public void cadastrar(AuthBean usuario){
         repository.cadastrar(usuario);
     }
     
